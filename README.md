@@ -119,10 +119,18 @@ Non-Myopic Equilibria:
 ## Theory
 
 ### Nash Equilibrium
-A Nash equilibrium is a strategy profile where no player can unilaterally improve their payoff by changing their strategy, given the other player's strategy.
+A Nash equilibrium is a strategy profile where no player can unilaterally improve their payoff by changing their strategy, given the other player's strategy. 
 
 ### Non-Myopic Equilibrium
 A non-myopic equilibrium is a strategy profile where players anticipate each other's best responses and choose strategies that lead to the best outcome given this anticipation. This is a more sophisticated equilibrium concept that considers strategic foresight. 
+
+The key idea is that each player’s mixed strategy (say, “play strategy 1 with probability p, strategy 2 with probability 1–p”) induces a joint distribution over the four possible outcomes in a 2×2 game. In calculateExpectedPayoff, for each pure‐strategy pair (i,j) it computes
+
+prob_i = (i==0 ? p1 : 1–p1),  
+prob_j = (j==0 ? p2 : 1–p2),  
+joint_prob = prob_i * prob_j;
+
+and then multiplies that joint probability by the payoff for (i,j). Summing over all four (i,j) gives the expected payoff under the mixed strategies.
 
 ## Dependencies
 
