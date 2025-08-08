@@ -14,8 +14,6 @@
 
 using namespace std;
 
-// Implementation of NormalFormSolver methods
-
 // Calculate expected payoff for a player given strategy profile
 double NormalFormSolver::calculateExpectedPayoff(int player, const StrategyProfile& profile) const {
     double expected_payoff = 0.0;
@@ -141,9 +139,6 @@ vector<Equilibrium> NormalFormSolver::findPureNashEquilibria() const {
 vector<Equilibrium> NormalFormSolver::findMixedNashEquilibria() const {
     vector<Equilibrium> equilibria;
     
-    // For 2x2 games, mixed strategy equilibria occur when players are indifferent
-    // between their strategies given the other player's mixed strategy
-    
     // Solve for player 1's mixed strategy that makes player 2 indifferent
     for (double p1 = 0.0; p1 <= 1.0; p1 += 0.01) {
         // Calculate player 2's expected payoff from strategy 1
@@ -183,19 +178,16 @@ vector<Equilibrium> NormalFormSolver::findAllNashEquilibria() const {
     return all_equilibria;
 }
 
-// Find non-myopic equilibrium (players look ahead and anticipate best responses)
+// Find NME
 vector<Equilibrium> NormalFormSolver::findNonMyopicEquilibria() const {
     vector<Equilibrium> non_myopic_equilibria;
-    
-    // Non-myopic equilibrium requires that players anticipate the other's best response
-    // and choose strategies that lead to the best outcome given this anticipation
     
     // Check all possible strategy profiles with finer granularity
     for (double p1 = 0.0; p1 <= 1.0; p1 += 0.05) {
         for (double p2 = 0.0; p2 <= 1.0; p2 += 0.05) {
             StrategyProfile profile(p1, p2);
             
-            // Check if this is a non-myopic equilibrium
+            // Check if this is NME
             bool is_non_myopic = true;
             
             // Player 1 anticipates player 2's best response
@@ -371,7 +363,7 @@ int main() {
     }
     cout << endl;
     
-    // Find non-myopic equilibria
+    // Find NME
     vector<Equilibrium> non_myopic_equilibria = solver.findNonMyopicEquilibria();
     cout << "Non-Myopic Equilibria:" << endl;
     if (non_myopic_equilibria.empty()) {
